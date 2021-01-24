@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use('*/css', express.static('public/css'));
 
-mongoose.connect("mongo://localhost:27017/wikiDB", {
+mongoose.connect("mongodb://localhost:27017/wikiDB", {
     useUnifiedTopology: true,
     useNewUrlParser: true
 });
@@ -27,6 +27,13 @@ const article1 = {
     title: "REST",
     content: "REST is short for REpresentational State Transfer. IIt's an architectural style for designing APIs."
 }
+
+app.get("/articles", (req, res) => {
+    Article.find(((err, docs) => {
+        if (!err) res.send(docs);
+        else res.send(err);
+    }))
+});
 
 
 app.listen(3000, () => {
