@@ -68,7 +68,15 @@ app.route("/articles/:articleTitle")
                 if (!err) res.send("Successfully updated article");
             });
 
-    });
+    })
+    .patch((req, res) => {
+        Article.update({title: req.params.articleTitle},
+            {$set: req.body},
+            (err) => {
+                if (!err) res.send("successfully updated article");
+                else res.send(err);
+            });
+    })
 
 
 app.listen(3000, () => {
