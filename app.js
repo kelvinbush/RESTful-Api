@@ -23,10 +23,6 @@ const articleSchema = {
 }
 
 const Article = mongoose.model("Article", articleSchema);
-const article1 = {
-    title: "REST",
-    content: "REST is short for REpresentational State Transfer. IIt's an architectural style for designing APIs."
-}
 
 app.get("/articles", (req, res) => {
     Article.find(((err, docs) => {
@@ -42,9 +38,17 @@ app.post("/articles", (req, res) => {
     });
 
     newArticle.save(err => {
-        if(!err) res.send("Successfully added");
-        else res.send("Something went wrong");
+        if (!err) res.send("Successfully added");
+        else res.send(err);
     });
+});
+
+app.delete("/articles", (req, res) => {
+    Article.deleteMany((err) => {
+        if (!err) {
+            res.send("Successfully deleted all articles");
+        } else res.send(err);
+    })
 })
 
 
