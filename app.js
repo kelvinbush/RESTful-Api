@@ -57,6 +57,17 @@ app.route("/articles/:articleTitle")
             if (doc) res.send(doc);
             else res.send("No article was found");
         });
+    })
+    .put((req, res) => {
+        Article.update({title: req.params.articleTitle},
+            {
+                title: req.body.title,
+                content: req.body.content
+            },
+            {overwrite: true}, (err, res1) => {
+                if (!err) res.send("Successfully updated article");
+            });
+
     });
 
 
